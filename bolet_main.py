@@ -10,14 +10,47 @@ async def on_ready():
 @client.command()
 async def info(ctx):
 	await ctx.send(
-	 "This is a bot for information about Cards from the game Creatures of Aether, by Tako Boy Studios and Dan Fornace LLC;\nUse $c followed by a card's name to see info about them;\nUse $a followed by an ability's name to see info about it;\nType $decks for a couple of useful links;\nType $skins for info on how what kinds of skins exist in the game, how to obtain them and who has them;\nIf you find any bugs, typos or creatures missing, DM @jpedromed and he'll take care of it;\nFor any names with spaces, the command used will have no spaces or an _ instead of spaces.")
+	 "This is a bot for information about Cards and Abilities from the game Creatures of Aether, by Tako Boy Studios and Dan Fornace LLC;\nUse $c followed by a card's name to see info about them;\nUse $a followed by an ability's name to see info about it;\nType $decks for a couple of useful links;\nType $skins for info on how what kinds of skins exist in the game, how to obtain them and who has them;\nType $lvl for the prices and copies needed to level up cards of each rarity\nType $rivals to see a list of all the rivals as well as info about them;\nIf you find any bugs, typos or creatures missing, DM @jpedromed and he'll take care of it;\nFor any names with spaces, the command used will have no spaces or an _ instead of spaces.")
  
 @client.command()
 async def decks(ctx):
 	await ctx.send(
 	 "User LunaRay keeps track of tournament top decks in https://tinyurl.com/CoACards go check it out!\nUser CMAvelis has a deckbuilder website, go check it out at https://creatures.cameronavelis.com/ this is also where we create card pools for tournaments.")
  
- #await ctx.send(f'Name: Tinderbit ", description = "Element: Fire\nRarity: Common\nPower Cost: 1\nAbility: none \nStats(lvl 1 | 2 | 3 | 4): \n :arrow_up: = 1 | 2 | 3 | 4\n :arrow_right: = 0 | 1 | 2 | 3\n :arrow_down: = 0 | 1 | 2 | 3\n :arrow_left: = 3 | 4 | 5 | 6') code I used before using embeds
+@client.command()
+async def lvl(ctx):
+  common = "⬜"
+  rare = "🟦"
+  epic = "🟪"
+  legend = "🟨"
+  embed0=discord.Embed(color = 0xd3d5e4, title = "Levels", description = "React with :white_large_square: to see how many resources are used to level up common cards;\nReact with :blue_square: to see how many resources are used to level up rare cards;\nReact with :purple_square: to see how many resources are used to level up epic cards;\nReact with :yellow_square: to see how many resources are used to level up legendary cards.")
+  embed1=discord.Embed(color = 0xd3d5e4, title = "Commons", description = "lvl 2 = 1000 Aether Coins, 50 copies\nlvl 3 = 4000 Aether Coins, 250 copies\nlvl 4 = 20000 Aether Coins, 1250 copies")
+  embed1.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/876149194866450432/card-Leffet-level-4.png")
+  embed2=discord.Embed(color = 0x5387ff, title = "Rares", description = "lvl 2 = 2000 Aether Coins, 10 copies\nlvl 3 = 8000 Aether Coins, 50 copies\nlvl 4 = 40000 Aether Coins, 250 copies")
+  embed2.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/876150164044275732/card-Briskis-level-4.png")
+  embed3=discord.Embed(color = 0xda73e3, title = "Epics", description = "lvl 2 = 4000 Aether Coins, 4 copies\nlvl 3 = 16000 Aether Coins, 20 copies\nlvl 4 = 80000 Aether Coins, 100 copies")
+  embed3.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/876152097278677032/card-Gorillanado-level-4.png")
+  embed4=discord.Embed(color = 0xefdb77, title = "Legendaries", description = "lvl 2 = 8000 Aether Coins, 2 copies\nlvl 3 = 32000 Aether Coins, 4 copies\nlvl 4 = 160000 Aether Coins, 10 copies")
+  embed4.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/876152133634912306/card-Zetterburn-level-4.png")
+  message = await ctx.send (embed = embed0)
+  number_of_responses = 4
+  emoji_numbers = [common, rare, epic, legend]
+  for i in range(number_of_responses):
+    await message.add_reaction(emoji_numbers[i])
+  @client.event
+  async def on_reaction_add(reaction, user):
+    if user != client.user: #client.user being the bot
+      if reaction.emoji == common:
+        await message.edit(embed=embed1)
+      if reaction.emoji == rare:
+        await message.edit(embed=embed2)
+      if reaction.emoji == epic:
+        await message.edit(embed=embed3)
+      if reaction.emoji == legend:
+        await message.edit(embed=embed4)
+    @client.event
+    async def on_raw_reaction_remove (reaction):
+      await message.edit(embed=embed0)
 @client.command()
 async def c(ctx, creature=None):
   variable = creature
@@ -97,7 +130,7 @@ async def c(ctx, creature=None):
     await ctx.send (embed = embed)
  
   elif creature == "flarekat" or creature == "Flarekat" or creature == "flarecat" or creature == "Flarecat":
-    embed=discord.Embed(color=0xd33c30, title = "Flarekat", description = "Element: Fire\nRarity: Common\nPower Cost: 3\nAbility: none\nStats(lvl 1 | 2 | 3 | 4): \n :arrow_up: = 1 | 2 | 3 | 4 \n :arrow_right: = 2 | 3 | 4 | 5 \n :arrow_down: = 1 |2 | 3 | 4  \n :arrow_left: = 8 | 9 | 10 | 11\nInformation: It lives with its pack, burrowing in volcanic rock. They are small, but brave!")
+    embed=discord.Embed(color=0xd33c30, title = "Flarekat", description = "Element: Fire\nRarity: Common\nPower Cost: 3\nAbility: none\nStats(lvl 1 | 2 | 3 | 4): \n :arrow_up: = 1 | 2 | 3 | 4 \n :arrow_right: = 2 | 3 | 4 | 5 \n :arrow_down: = 1 | 2 | 3 | 4  \n :arrow_left: = 8 | 9 | 10 | 11\nInformation: It lives with its pack, burrowing in volcanic rock. They are small, but brave!")
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/872238473581592586/card-FireNormalAnimal1-level-1.png")
     
     await ctx.send (embed = embed)
@@ -182,13 +215,13 @@ async def c(ctx, creature=None):
   
   elif creature == "smeltsmash" or creature == "Smeltsmash":
     embed=discord.Embed(color=0xd33c30, title = "Smeltsmash", description = "Element: Fire\nRarity: Rare\nPower Cost: 4\nAbility: none\nStats(lvl 1 | 2 | 3 | 4): \n :arrow_up: = 6 | 7 | 8 | 9 \n :arrow_right: = 0 | 1 | 2 | 3 \n :arrow_down: = 6 | 7 | 8 | 9 \n :arrow_left: = 5 | 6 | 7 | 8 \nInformation: A dangerous predator that patrols the many magma channels beneath active volcanoes. Loves to crush foes with its head.")
-    embed.set_thumbnail(url="hhttps://cdn.discordapp.com/attachments/872236731397734431/872238718214344725/card-Smeltsmash-level-1.png")
+    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/872238718214344725/card-Smeltsmash-level-1.png")
     
     await ctx.send (embed = embed)
  
   elif creature == "Sunny" or creature == "sunny":
     embed=discord.Embed(color=0xd33c30, title = "Sunny", description = "Element: Fire\nRarity: Rare\nPower Cost: 4\nAbility: Ally\nStats(lvl 1 | 2 | 3 | 4): \n :arrow_up: = 2 | 3 | 4 | 5 \n :arrow_right: = 7 | 8 | 9 | 10 \n :arrow_down: = 2 | 3 | 4 | 5 \n :arrow_left: = 2 | 3 | 4 | 5\nInformation: An adorable canine with a fiery coat of fur. Said to harness power of the sun!")
-    embed.set_thumbnail(url="hhttps://cdn.discordapp.com/attachments/872236731397734431/872238727576031263/card-Sunny-level-1.png")
+    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/872238727576031263/card-Sunny-level-1.png")
     
     await ctx.send (embed = embed)
  
@@ -320,7 +353,7 @@ async def c(ctx, creature=None):
  
   elif creature == "Torong" or creature == "torong" or creature == "towong" or creature == "Towong":
     embed=discord.Embed(color=0x63bf3c, title = "Torong", description = "Element: Earth\nRarity: Epic\nPower Cost: 3\nAbility: Push\nStats(lvl 1 | 2 | 3 | 4): \n :arrow_up: = 3 | 4 | 5 | 6 \n :arrow_right: = 3 | 4 | 5 | 6 \n :arrow_down: = 4 | 5 | 6 | 7\n :arrow_left: = 4 | 5 | 6 | 7\nInformation: A martial arts master. Specialing in grapples and throws, his fierce grip is nearly impossible to escape from.")
-    embed.set_thumbnail(url="hhttps://cdn.discordapp.com/attachments/872236731397734431/872238739840172053/card-Torong-level-1.png")
+    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/872238739840172053/card-Torong-level-1.png")
     
     await ctx.send (embed = embed)
  
@@ -518,7 +551,7 @@ async def c(ctx, creature=None):
  
   elif creature == "tentacopter" or creature == "Tentacopter":
     embed=discord.Embed(color=0xbf96df, title = "Tentacopter", description = "Element: Air\nRarity: Common\nPower Cost: 3\nAbility: none\nStats(lvl 1 | 2 | 3 | 4): \n :arrow_up: = 2 | 3 | 4 | 5 \n :arrow_right: = 2 | 3 | 4 | 5 \n :arrow_down: = 6 | 7 | 8 | 9 \n :arrow_left: = 2 | 3 | 4 | 5\nInformation: A strange creature that can sometimes be spotted flying through dangerous storms.")
-    embed.set_thumbnail(url="hhttps://cdn.discordapp.com/attachments/872236731397734431/872238736606363668/card-Tentacopter-level-1.png")
+    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/872238736606363668/card-Tentacopter-level-1.png")
     
     await ctx.send (embed = embed)
  
@@ -698,7 +731,7 @@ async def c(ctx, creature=None):
  
   elif creature == "Chillamari" or creature == "chillamari":
     embed=discord.Embed(color=0x6ab0ff, title = "Chillamari", description = "Element: Water\nRarity: Common\nPower Cost: 3\nAbility: Home Field\nStats(lvl 1 | 2 | 3 | 4): \n :arrow_up: = 2 | 3 | 4 | 5 \n :arrow_right: = 2 | 3 | 4 | 5 \n :arrow_down: = 2 | 3 | 4 | 5 \n :arrow_left: = 2 | 3 | 4 | 5\nInformation: The crowned jewel beset in its head can blind creatures with its benevolent beauty.")
-    embed.set_thumbnail(url="hhttps://cdn.discordapp.com/attachments/872236731397734431/872238806672216094/card-WaterGroundAnimal-level-1.png")
+    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/872238806672216094/card-WaterGroundAnimal-level-1.png")
     
     await ctx.send (embed = embed)
  
@@ -744,8 +777,8 @@ async def c(ctx, creature=None):
     
     await ctx.send (embed = embed)
  
-  elif creature == "Frostbite" or creature == "forstbite":
-    embed=discord.Embed(color=0x6ab0ff, title = "Forstbite", description = "Element: Water\nRarity: Rare\nPower Cost: 4\nAbility: none\nStats(lvl 1 | 2 | 3 | 4): \n :arrow_up: = 2 | 3 | 4 | 5 \n :arrow_right: = 3 | 4 | 5 | 6 \n :arrow_down: = 8 | 9 | 10 | 11 \n :arrow_left: = 4 | 5 | 6 | 7\nInformation: A ferocious tiger with razor-sharp icicle fangs. Its tail is equally as dangerous.")
+  elif creature == "Frostbite" or creature == "frostbite":
+    embed=discord.Embed(color=0x6ab0ff, title = "Frostbite", description = "Element: Water\nRarity: Rare\nPower Cost: 4\nAbility: none\nStats(lvl 1 | 2 | 3 | 4): \n :arrow_up: = 2 | 3 | 4 | 5 \n :arrow_right: = 3 | 4 | 5 | 6 \n :arrow_down: = 8 | 9 | 10 | 11 \n :arrow_left: = 4 | 5 | 6 | 7\nInformation: A ferocious tiger with razor-sharp icicle fangs. Its tail is equally as dangerous.")
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/872238846182567986/card-WaterStrongerAnimal2-level-1.png")
     
     await ctx.send (embed = embed)
@@ -841,9 +874,8 @@ async def c(ctx, creature=None):
     await ctx.send (embed = embed)
  
   elif creature == "Fleet" or creature == "fleet":
-    embed=discord.Embed(color=0xbf96df, title = "Fleet", description = "Element: Air\nRarity: Legendary\nAbility: Stamina\nStats(lvl 1 | 2 | 3 | 4): \n :arrow_up: = 3 | 4 | 5 | 6 \n :arrow_right: = 3 | 4 | 5 | 6 \n :arrow_down: = 3 | 4 | 5 | 6 \n :arrow_left: = 3 | 4 | 5 | 6\nInformation: Julesvale’s very own Robin Hood. She protects the downtrodden and stands up to Badger Co.")
-    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/872238524550754375/card-Fleet-level-1.png")
-    
+    embed=discord.Embed(color=0xbf96df, title = "Fleet", description = "Element: Air\nRarity: Legendary\nAbility: Stamina\nStats(lvl 1 | 2 | 3 | 4): \n :arrow_up: = 2 | 3 | 4 | 5 \n :arrow_right: = 2 | 3 | 4 | 5\n :arrow_down: = 2 | 3 | 4 | 5 \n :arrow_left: = 2 | 3 | 4 | 5\nInformation: Julesvale’s very own Robin Hood. She protects the downtrodden and stands up to Badger Co.")
+    embed.set_thumbnail(url="https://media.discordapp.net/attachments/872236731397734431/876288833237434378/1628993933475.png")
     await ctx.send (embed = embed)
  
   elif creature == "Forsburn" or creature == "forsburn" or creature == "fors" or creature == "Fors":
@@ -859,9 +891,8 @@ async def c(ctx, creature=None):
     await ctx.send (embed = embed)
  
   elif creature == "Maypul" or creature == "maypul":
-    embed=discord.Embed(color=0x63bf3c, title = "Maypul", description = "Element: Earth\nRarity: Legendary\nAbility: Spreading Roots\nStats(lvl 1 | 2 | 3 | 4): \n :arrow_up: = 4 | 5 | 6 | 7 \n :arrow_right: = 6 | 7 | 8 | 9 \n :arrow_down: = 5 | 6 | 7 | 8 \n :arrow_left: = 7 | 8 | 9 | 10 \nInformation: Self-appointed guardian of the Aetherian Forest. She possesses incredible agility.")
-    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/872655641183920198/card-Maypul-level-1.png")
- 
+    embed=discord.Embed(color=0x63bf3c, title = "Maypul", description = "Element: Earth\nRarity: Legendary\nAbility: Spreading Roots\nStats(lvl 1 | 2 | 3 | 4): \n :arrow_up: = 5 | 6 | 7 | 8 \n :arrow_right: = 6 | 7 | 8 | 9 \n :arrow_down: = 6 | 7 | 8 | 9 \n :arrow_left: = 7 | 8 | 9 | 10 \nInformation: Self-appointed guardian of the Aetherian Forest. She possesses incredible agility.")
+    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/874752889518710814/card-Maypul-level-1.png")
     await ctx.send (embed = embed)
  
   elif creature == "Orcane" or creature == "orcane" or creature == "orca"  or creature == "Orca":
@@ -878,13 +909,13 @@ async def c(ctx, creature=None):
  
   elif creature == "Sylvanos" or creature == "sylvanos" or creature == "sylv"  or creature == "Sylv":
     embed=discord.Embed(color=0x63bf3c, title = "Sylvanos", description = "Element: Earth\nRarity: Legendary\nAbility: Untamed Growth\nStats(lvl 1 | 2 | 3 | 4): \n :arrow_up: = 3 | 4 | 5 | 6 \n :arrow_right: = 3 | 4 | 5 | 6 \n :arrow_down: = 3 | 4 | 5 | 6 \n :arrow_left: = 3 | 4 | 5 | 6\nInformation: A powerful creature heralded as ‘the heart of the forest’.")
-    embed.set_thumbnail(url="hhttps://cdn.discordapp.com/attachments/872236731397734431/872238733502595153/card-Sylvanos-level-1.png")
+    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/872238733502595153/card-Sylvanos-level-1.png")
     
     await ctx.send (embed = embed)
  
   elif creature == "Wrastor" or creature == "wrastor":
-    embed=discord.Embed(color=0xbf96df, title = "Wrastor", description = "Element: Air\nRarity: Legendary\nAbility: Tornado\nStats(lvl 1 | 2 | 3 | 4): \n :arrow_up: = 5 | 6 | 7 | 8 \n :arrow_right: = 3 | 4 | 5 | 6 \n :arrow_down: = 2 | 3 | 4 | 5 \n :arrow_left: = 4 | 5 | 6 | 7\nInformation: The infamous Aerial Ace of the ‘Air Armada’. His arrogance knows no bounds.")
-    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/872238857691734026/card-Wrastor-level-1.png")
+    embed=discord.Embed(color=0xbf96df, title = "Wrastor", description = "Element: Air\nRarity: Legendary\nAbility: Tornado\nStats(lvl 1 | 2 | 3 | 4): \n :arrow_up: = 5 | 6 | 7 | 8 \n :arrow_right: = 4 | 5 | 6 | 7 \n :arrow_down: = 3 | 4 | 5 | 6 \n :arrow_left: = 4 | 5 | 6 | 7\nInformation: The infamous Aerial Ace of the ‘Air Armada’. His arrogance knows no bounds.")
+    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/874752899312418816/card-Wrastor-level-1.png")
     
     await ctx.send (embed = embed)
   elif creature == "Zetterburn" or creature == "zetterburn" or creature == "zetter" or creature == "Zetter":
@@ -899,33 +930,135 @@ async def c(ctx, creature=None):
 
     await ctx.send (embed = embed)
   elif creature == "Guadua" or creature == "guadua":
-    embed=discord.Embed(color=0x63bf3c, title = "Guadua", description = "Element: Earth\nRarity: Legendary\nAbility: Bamboo Bayonet\nStats(lvl 1 | 2 | 3 | 4): \n :arrow_up: = 4 | 5 | 6 | 7 \n :arrow_right: = 5 | 6 | 7 | 8 \n :arrow_down: =6 | 7 | 8 | 9 \n :arrow_left: = 4 | 5 | 6 | 7\nInformation: The biggest, baddest panda that the world of Rivals has ever seen.")
-    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/872654382645280830/card-Guadua-level-1.png")
+    embed=discord.Embed(color=0x63bf3c, title = "Guadua", description = "Element: Earth\nRarity: Legendary\nAbility: Bamboo Bayonet\nStats(lvl 1 | 2 | 3 | 4): \n :arrow_up: = 3 | 4 | 5 | 6\n :arrow_right: = 4 | 5 | 6 | 7 \n :arrow_down: = 5 | 6 | 7 | 8 \n :arrow_left: = 4 | 5 | 6 | 7\nInformation: The biggest, baddest panda that the world of Rivals has ever seen.")
+    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/874752894560260106/card-Guadua-level-1.png")
     await ctx.send (embed = embed)
-  elif creature == "Rivals" or creature == "rivals":
-    embed = discord.Embed(title="Rivals", description="From left to right, top to bottom:\nAbsa (Ability: Voltmatch)\nMaypul (Ability: Spreading Roots)\nOrcane (Ability: Puddleport)\nZetterburn (Ability: Scorch)\nClairen (Ability: Plasma Field)\nEtalus(Ability: Ice Armor)\nWrastor (Ability: Tornado)\nSylvanos (Ability: Untamed Growth)\nForsburn (Ability: Smokescreen)\nKragg (Ability: Rock)\nFleet (Ability: Stamina Dice)\nRanno (Ability: Bubble Flip)\nElliana (Abilities: Missile Barrage and Overheat)\nSlade (Ability: Thief's Gambit)\nGuadua (Ability: Bamboo Bayonet)", color=0xefdb77)
-    embed.set_image(url = "https://cdn.discordapp.com/attachments/872236731397734431/872240621644042371/Design_sem_nome_1.png")
-    await ctx.send (embed = embed)
-
   else: 
     await ctx.send (f"I'm sorry, I don't know this creature, make sure you spelled it correctly or check with @jpedromed")
 @client.command()
+async def rivals(ctx):
+  embed0=discord.Embed(title="Rivals", description="From left to right, top to bottom:\nAbsa (:goat:)\nMaypul (:raccoon:)\nOrcane (:dolphin:)\nZetterburn (:lion:)\nClairen (:crossed_swords:)\nEtalus (:polar_bear:)\nWrastor (:bird:)\nSylvanos (:seedling:)\nForsburn (:knife:)\nKragg (:rock:)\nFleet (:fox:) \nRanno (:frog:) \nElliana (:snake:) \nSlade (:shark:) \nGuadua (:panda_face:)\nReactions take some time to load.", color=0xefdb77)
+  embed0.set_image(url = "https://cdn.discordapp.com/attachments/872236731397734431/877378068409364500/Design_sem_nome_2.png")
+  message = await ctx.send (embed = embed0)
+  embed1=discord.Embed(color=0xbf96df, title = "Absa", description = "Element: Air\nRarity: Legendary\nAbility: Voltmatch\nStats(lvl 1 | 2 | 3 | 4): \n :arrow_up: = 6 | 7 | 8 | 9 \n :arrow_right: = 4 | 5 | 6 | 7 \n :arrow_down: = 5 | 6 | 7 | 8 \n :arrow_left: = 3 | 4 | 5 | 6\nInformation: A famed engineer and martial artist, her skill with lightning is a force to be reckoned with.")
+  embed1.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/872238233688363088/card-Absa-level-1.png")
+  embed2=discord.Embed(color=0x63bf3c, title = "Maypul", description = "Element: Earth\nRarity: Legendary\nAbility: Spreading Roots\nStats(lvl 1 | 2 | 3 | 4): \n :arrow_up: = 5 | 6 | 7 | 8 \n :arrow_right: = 6 | 7 | 8 | 9 \n :arrow_down: = 6 | 7 | 8 | 9 \n :arrow_left: = 7 | 8 | 9 | 10 \nInformation: Self-appointed guardian of the Aetherian Forest. She possesses incredible agility.")
+  embed2.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/874752889518710814/card-Maypul-level-1.png")
+  embed3=discord.Embed(color=0x6ab0ff, title = "Orcane", description = "Element: Water\nRarity: Legendary\nAbility: Puddleport\nStats(lvl 1 | 2 | 3 | 4): \n :arrow_up: = 7 | 8 | 9 | 10 \n :arrow_right: = 7 | 8 | 9 | 10 \n :arrow_down: = 4 | 5 | 6 | 7 \n :arrow_left: = 4 | 5 | 6 | 7\nInformation: The puddle jumping trickster is as slippery as he is playful.")
+  embed3.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/872238628435283988/card-Orcane-level-1.png")
+  embed4=discord.Embed(color=0xd33c30, title = "Zetterburn", description = "Element: Fire\nRarity: Legendary\nAbility: Scorch\nStats(lvl 1 | 2 | 3 | 4): \n :arrow_up: = 5 | 6 | 7 | 8 \n :arrow_right: = 8 | 9 | 10 | 11 \n :arrow_down: = 5 | 6 | 7 | 8 \n :arrow_left: = 6 | 7 | 8 | 9\nInformation: Known as the “Fire Roar”, he is an immensely powerful warrior of the Firelands.")
+  embed4.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/872238230186115102/card-Zetterburn-level-1.png")
+  embed5=discord.Embed(color=0xd33c30, title = "Clairen", description = "Element: Fire\nRarity: Legendary\n Ability: Plasma Field\nStats(lvl 1 | 2 | 3 | 4): \n :arrow_up: = 4 | 5 | 6 | 7 \n :arrow_right: = 6 | 7 | 8 | 9 \n :arrow_down: = 6 | 7 | 8 | 9 \n :arrow_left: = 5 | 6 | 7 | 8\nInformation: A seasoned warrior from the future. She’s come to the past on a noble mission to save her kingdom.")
+  embed5.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/872238339925897216/card-Clairen-level-1.png")
+  embed6=discord.Embed(color=0x6ab0ff, title = "Etalus", description = "Element: Water\nRarity: Legendary\nAbility: Ice Armor\nStats(lvl 1 | 2 | 3 | 4): \n :arrow_up: = 4 | 5 | 6 | 7 \n :arrow_right: = 4 | 5 | 6 | 7 \n :arrow_down: = 5 | 6 | 7 | 8 \n :arrow_left: = 6 | 7 | 8 | 9\nInformation: A legendary warrior from the Ice Barrens. One of the last surviving members of the ‘Harbor Guard’.")
+  embed6.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/872238427523923983/card-Etalus-level-1.png")
+  embed7=discord.Embed(color=0xbf96df, title = "Wrastor", description = "Element: Air\nRarity: Legendary\nAbility: Tornado\nStats(lvl 1 | 2 | 3 | 4): \n :arrow_up: = 5 | 6 | 7 | 8 \n :arrow_right: = 4 | 5 | 6 | 7 \n :arrow_down: = 3 | 4 | 5 | 6 \n :arrow_left: = 4 | 5 | 6 | 7\nInformation: The infamous Aerial Ace of the ‘Air Armada’. His arrogance knows no bounds.")
+  embed7.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/874752899312418816/card-Wrastor-level-1.png")
+  embed8=discord.Embed(color=0x63bf3c, title = "Sylvanos", description = "Element: Earth\nRarity: Legendary\nAbility: Untamed Growth\nStats(lvl 1 | 2 | 3 | 4): \n :arrow_up: = 3 | 4 | 5 | 6 \n :arrow_right: = 3 | 4 | 5 | 6 \n :arrow_down: = 3 | 4 | 5 | 6 \n :arrow_left: = 3 | 4 | 5 | 6\nInformation: A powerful creature heralded as ‘the heart of the forest’.")
+  embed8.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/872238733502595153/card-Sylvanos-level-1.png")
+  embed9=discord.Embed(color=0xd33c30, title = "Forsburn", description = "Element: Fire\nRarity: Legendary\nAbility: Smokescreen\nStats(lvl 1 | 2 | 3 | 4): \n :arrow_up: = 7 | 8 | 9 | 10 \n :arrow_right: = 8 | 9 | 10 | 11 \n :arrow_down: = 5 | 6 | 7 | 8 \n :arrow_left: = 4 | 5 | 6 | 7\nInformation: Leader of the ‘Smoke Clan’, this disgraced exile plots to reclaim the corrupted Fire Capital.")
+  embed9.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/872238537888628767/card-Forsburn-level-1.png")
+  embed10=discord.Embed(color=0x63bf3c, title = "Kragg", description = "Element: Earth\nRarity: Legendary\nAbility: Rock <a:kraggrock:867927454164058123>\nStats(lvl 1 | 2 | 3 | 4): \n :arrow_up: = 7 | 8 | 9 | 10 \n :arrow_right: = 4 | 5 | 6 | 7 \n :arrow_down: = 5 | 6 | 7 | 8 \n :arrow_left: = 4 | 5 | 6 | 7\nInformation: A fierce defender of the forest, he patrols the border atop the massive Rock Wall.")
+  embed10.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/872238585842135080/card-Kragg-level-1.png")
+  embed11=discord.Embed(color=0xbf96df, title = "Fleet", description = "Element: Air\nRarity: Legendary\nAbility: Stamina\nStats(lvl 1 | 2 | 3 | 4): \n :arrow_up: = 2 | 3 | 4 | 5 \n :arrow_right: = 2 | 3 | 4 | 5\n :arrow_down: = 2 | 3 | 4 | 5 \n :arrow_left: = 2 | 3 | 4 | 5\nInformation: Julesvale’s very own Robin Hood. She protects the downtrodden and stands up to Badger Co.")
+  embed11.set_thumbnail(url="https://media.discordapp.net/attachments/872236731397734431/876288833237434378/1628993933475.png")
+  embed12=discord.Embed(color=0x6ab0ff, title = "Ranno", description = "Element: Water\nRarity: Legendary\nAbility: Bubble Flip\nStats(lvl 1 | 2 | 3 | 4): \n :arrow_up: = 6 | 7 | 8 | 9 \n :arrow_right: = 3 | 4 | 5 | 6 \n :arrow_down: = 6 | 7 | 8 | 9 \n :arrow_left: = 7 | 8 | 9 | 10\nInformation: A martial arts master with a peaceful disposition.")
+  embed12.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/872238651986292796/card-Ranno-level-1.png")
+  embed13=discord.Embed(color=0xbf96df, title = "Elliana", description = "Element: Air\nRarity: Legendary\nAbilities: Missile Barrage and Overheat\nStats(lvl 1 | 2 | 3 | 4): \n :arrow_up: = 1 | 2 | 3 | 4 \n :arrow_right: = 3 | 4 | 5 | 6 \n :arrow_down: = 2 | 3 | 4 | 5 \n :arrow_left: = 4 | 5 | 6 | 7\nInformation: An ambitious pilot equipped with a deadly, weaponized flying machine.")
+  embed13.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/872238425837826138/card-Elliana-level-1.png")
+  embed14 = discord.Embed(color=0x6ab0ff, title="Slade", description = "Element: Water\nRarity: Legendary\nAbility: Thief's Gambit\nStats(lvl 1 | 2 | 3 | 4): \n :arrow_up: = 6 | 7 | 8 | 9 \n :arrow_right: = 5 | 6 | 7 | 8 \n :arrow_down: = 5 | 6 | 7 | 8 \n :arrow_left: = 7 | 8 | 9 | 10\nInformation: Slade’s penchant for stealing led him from the Poleki Islands to a swashbuckling pirate life")
+  embed14.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/872238707112017970/card-Slade-level-1.png")
+  embed15=discord.Embed(color=0x63bf3c, title = "Guadua", description = "Element: Earth\nRarity: Legendary\nAbility: Bamboo Bayonet\nStats(lvl 1 | 2 | 3 | 4): \n :arrow_up: = 3 | 4 | 5 | 6\n :arrow_right: = 4 | 5 | 6 | 7 \n :arrow_down: = 5 | 6 | 7 | 8 \n :arrow_left: = 4 | 5 | 6 | 7\nInformation: The biggest, baddest panda that the world of Rivals has ever seen.")
+  embed15.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/874752894560260106/card-Guadua-level-1.png")
+  number_of_responses = 15
+  emoji_numbers = ["🐐", "🦝", "🐬", "🦁", "⚔️", "🐻‍❄️", "🐦", "🌱", "🔪", "🪨", "🦊", "🐸", "🐍", "🦈", "🐼"]
+  for i in range(number_of_responses):
+    await message.add_reaction(emoji_numbers[i])
+  @client.event
+  async def on_reaction_add(reaction, user):
+    if user != client.user: 
+      if reaction.emoji == "🐐":
+        await message.edit(embed=embed1)
+    if user != client.user: 
+      if reaction.emoji == "🦝":
+        await message.edit(embed=embed2)
+    if user != client.user: 
+      if reaction.emoji == "🐬":
+        await message.edit(embed=embed3)
+    if user != client.user: 
+      if reaction.emoji == "🦁":
+        await message.edit(embed=embed4)
+    if user != client.user: 
+      if reaction.emoji == "⚔️":
+        await message.edit(embed=embed5)
+    if user != client.user: 
+      if reaction.emoji == "🐻‍❄️":
+        await message.edit(embed=embed6)
+    if user != client.user: 
+      if reaction.emoji == "🐦":
+        await message.edit(embed=embed7)
+    if user != client.user: 
+      if reaction.emoji == "🌱":
+        await message.edit(embed=embed8)
+    if user != client.user: 
+      if reaction.emoji == "🔪":
+        await message.edit(embed=embed9)
+    if user != client.user: 
+      if reaction.emoji == "🪨":
+        await message.edit(embed=embed10)
+    if user != client.user: 
+      if reaction.emoji == "🦊":
+        await message.edit(embed=embed11)
+    if user != client.user: 
+      if reaction.emoji == "🐸":
+        await message.edit(embed=embed12)
+    if user != client.user: 
+      if reaction.emoji == "🐍":
+        await message.edit(embed=embed13)
+    if user != client.user: 
+      if reaction.emoji == "🦈":
+        await message.edit(embed=embed14)
+    if user != client.user: 
+      if reaction.emoji == "🐼":
+        await message.edit(embed=embed15)
+  @client.event
+  async def on_raw_reaction_remove (reaction):
+    await message.edit(embed=embed0)
+
+@client.command()
 async def skins(ctx):
-  embed=discord.Embed(title="Champion Skins", description = "Champions Skins are obtainable through participation in tournaments. For more information, react to this message: (https://discord.com/channels/695434412451561542/695442626878504970/725182318381236274) and then head over to the #tournament-faq channel\n Obtainable for: Zetterburn, Absa, Orcane, Maypul, Clairen, Etalus, Wrastor, Sylvanos, Forsburn, Kragg, Fleet, Ranno and Elliana so far.", color=0x1e212a)
-  embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/872655752689512548/card-Fleetchampion-level-1.png")
-  await ctx.send (embed = embed)
-  embed=discord.Embed(title="Master Skins", description = "Master Skins are given to the top 100 on the in-game leaderboard at the end of a season. The Master Skin given is the one for the Rival from the Rival Pass from when the player got Top 100.\nObtainable for: Sylvanos, Forsburn, Kragg, Fleet, Ranno and Elliana so far.", color=0x72d1a0)
-  embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/872655767277277234/card-Fleetmaster-level-1.png")
-  await ctx.send (embed = embed)
-  embed=discord.Embed(title="Gameboy Skins", description = "For the four starter Rivals, Gameboy skins were given to the people who played the game's Beta at least once from July 31st, 2020, to September 28th, 2020; For new Rivals, starting with Forsburn,Gameboy skins were awarded for people who bought the Rival Pass and got to at least tier 5 of it.\nObtainable for: Absa, Zetterburn, Maypul, Orcane, Forsburn, Kragg, Fleet, Ranno, Elliana and Slade so far.", color=0xa6b95c)
-  embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/872655755436769310/card-Fleetgameboy-level-1.png")
-  await ctx.send (embed = embed)
-  embed=discord.Embed(title="Golden Skins", description = "Golden skins are given to you when you reach 500 affection with a creature (the ribbons when you click on a card's info).\nObtainable for: Every creature.", color=0xffeb85)
-  embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/872655763217190973/card-Fleetgolden-level-1.png")
-  await ctx.send (embed = embed)
-  embed=discord.Embed(title="Premium Skins", description = "Premium skins or Seasonal skins are skins that have to be bought through bundles on the shop. Each bundle usually contains the skin, a copy of the card that skins is for (or multiple, if it's not a legendary), 30 thousand coins and 250 orbs and usually cost 10 USD. They are only available during certain periods, but most likely will appear again when time comes.\nObtainable for: Absa, Maypul, Zetterburn, Etalus, Folet, Joltbeak, Wrastor, Forsburn, Orcane, Fleet, Kragg, Master Cai, Ranno, Elliana, Swiftwing and Slade so far.", color=0x765d79)
-  embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/872655759559757824/card-Fleetlovers-level-1.png")
-  await ctx.send (embed = embed)
+  embed0=discord.Embed(title = "Skins", description = "React to this message with :trophy: to see how to obtain Champions Skins;\nReact to this message with :100: to see how to obtain Master skins;\nReact to this message with :video_game: to see how to obtain Gameboy Skins;\nReact to this message with :ribbon: to see how to obtain Golden Skins;\nReact to this message with :sparkles: to see how to obtain Premium Skins.", color= 0xd3d5e4)
+  embed1=discord.Embed(title="Champion Skins", description = "Champions Skins are obtainable through participation in tournaments. For more information, react to this message: (https://discord.com/channels/695434412451561542/695442626878504970/725182318381236274) and then head over to the #tournament-faq channel\n Obtainable for: Zetterburn, Absa, Orcane, Maypul, Clairen, Etalus, Wrastor, Sylvanos, Forsburn, Kragg, Fleet, Ranno, Elliana, Slade and Guadua so far.", color=0x1e212a)
+  embed1.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/872655752689512548/card-Fleetchampion-level-1.png")
+  embed2=discord.Embed(title="Master Skins", description = "Master Skins are given to the top 100 on the in-game leaderboard at the end of a season. The Master Skin given is the one for the Rival from the Rival Pass from when the player got Top 100.\nObtainable for: Sylvanos, Forsburn, Kragg, Fleet, Ranno, Elliana and Slade so far.", color=0x72d1a0)
+  embed2.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/872655767277277234/card-Fleetmaster-level-1.png")
+  embed3=discord.Embed(title="Gameboy Skins", description = "For the four starter Rivals, Gameboy skins were given to the people who played the game's Beta at least once from July 31st, 2020, to September 28th, 2020; For new Rivals, starting with Forsburn,Gameboy skins were awarded for people who bought the Rival Pass and got to at least tier 5 of it.\nObtainable for: Absa, Zetterburn, Maypul, Orcane, Forsburn, Kragg, Fleet, Ranno, Elliana, Slade and Guadua so far.", color=0xa6b95c)
+  embed3.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/872655755436769310/card-Fleetgameboy-level-1.png")
+  embed4=discord.Embed(title="Golden Skins", description = "Golden skins are given to you when you reach 500 affection with a creature (the ribbons when you click on a card's info).\nObtainable for: Every creature.", color=0xffeb85)
+  embed4.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/872655763217190973/card-Fleetgolden-level-1.png")
+  embed5=discord.Embed(title="Premium Skins", description = "Premium skins or Seasonal skins are skins that have to be bought through bundles on the shop. Each bundle usually contains the skin, a copy of the card that skins is for (or multiple, if it's not a legendary), 30 thousand coins and 250 orbs and usually cost 10 USD. They are only available during certain periods, but most likely will appear again when time comes.\nObtainable for: Absa, Maypul, Zetterburn, Etalus, Folet, Joltbeak, Wrastor, Forsburn, Orcane, Fleet, Kragg, Master Cai, Ranno, Elliana, Swiftwing and Slade so far.", color=0x765d79)
+  embed5.set_thumbnail(url="https://cdn.discordapp.com/attachments/872236731397734431/872655759559757824/card-Fleetlovers-level-1.png")
+  message = await ctx.send (embed = embed0)
+  number_of_responses = 5
+  emoji_numbers = ["🏆", "💯", "🎮", "🎀", "✨"]
+  for i in range(number_of_responses):
+    await message.add_reaction(emoji_numbers[i])
+  @client.event
+  async def on_reaction_add(reaction, user):
+    if user != client.user: #client.user being the bot
+      if reaction.emoji == "🏆":
+        await message.edit(embed=embed1)
+      if reaction.emoji == "💯":
+        await message.edit(embed=embed2)
+      if reaction.emoji == "🎮":
+        await message.edit(embed=embed3)
+      if reaction.emoji == "🎀":
+        await message.edit(embed=embed4)
+      if reaction.emoji == "✨":
+        await message.edit(embed=embed5) 
+    @client.event
+    async def on_raw_reaction_remove (reaction):
+      await message.edit(embed=embed0)
 #this is the command for abilities. I have to send the gif as a separate message because gifs on embeds have a very bad frame rate
 @client.command()
 async def a(ctx, ability=None):
@@ -971,7 +1104,7 @@ async def a(ctx, ability=None):
     await ctx.send (embed = embed)
     await ctx.send("https://imgur.com/EFFtZ32")
   elif ability == "knight" or ability == "knights" or ability == "Knight" or ability == "Knights" or ability == "K" or ability == "k":
-    embed=discord.Embed(color=0xda73e3, title = "Knight", description = "Stat Cost: 1\nDescription: When capturing a creature, jump to any adjacent space of the captured creature. When landing, this card regains its flip potential.\nUnlocks at: Arena 9 (Treetop Lodge)\nCreature(s) with this ability: Flitch <:el_fire:863078639709323295>, Billsowrth <:el_water:863078639541420043>, Minto <:el_earth:863078639779971102> and Freyden <:el_air:863078639575105626>")
+    embed=discord.Embed(color=0xda73e3, title = "Knight", description = "Stat Cost: 1\nDescription: When capturing a creature, jump to any adjacent space of the captured creature. When landing, this card regains its flip potential.\nUnlocks at: Arena 9 (Treetop Lodge)\nCreature(s) with this ability: Flitch <:el_fire:863078639709323295>, Billsworth <:el_water:863078639541420043>, Minto <:el_earth:863078639779971102> and Freyden <:el_air:863078639575105626>")
     await ctx.send (embed = embed)
     await ctx.send("https://imgur.com/I2ixL0P")
   elif ability == "Push" or ability == "push" or ability == "P" or ability == "p" :
@@ -1012,7 +1145,7 @@ async def a(ctx, ability=None):
   elif ability == "Puddleport" or ability == "puddleport" or ability == "Orcane" or ability == "orcane" or ability == "orca" or ability == "Orca":
     embed=discord.Embed(color=0xefdb77, title = "Puddleport", description = "Description: Captrues creatures from a distance using water spouts. Spouts can wrap the board to hit from the opposing side.\nRival with this ability: Orcane <:el_water:863078639541420043>")
     await ctx.send (embed = embed)
-    await ctx.send("https://imgur.com/K5mOsAo")
+    await ctx.send("https://imgur.com/gUyVM81")
   elif ability == "StaminaDice" or ability == "staminadice" or ability == "Staminadice" or ability == "staminaDice" or ability == "Stamina_Dice" or ability == "stamina_dice" or ability == "Stamina_dice" or ability == "stamina_Dice" or ability == "Dice" or ability == "dice" or ability == "Fleet" or ability == "fleet" or ability == "stamina" or ability == "Stamina":
     embed=discord.Embed(color=0xefdb77, title = "Stamina Dice", description = "Description: Starts the game with 6 Stamina. Each turn, you can spend Stamina to add a modifier to the next creature you play. Spends all remaining Stamina when this card is played.\nRival with this ability: Fleet <:el_air:863078639575105626>")
     await ctx.send (embed = embed)
@@ -1038,12 +1171,33 @@ async def a(ctx, ability=None):
     await ctx.send (embed = embed)
     await ctx.send("https://imgur.com/YrUzyQD")
   elif ability == "elliana" or ability == "Elliana" or ability == "Elli" or ability == "elli":
-    embed=discord.Embed(color=0xefdb77, title = "Missile Barrage", description = "Description: Creates a missile for every exposed side with power equal to that side. This missile fires and flips the furthest creature with any power lower than that missile.\nRival with this ability: Elliana <:el_air:863078639575105626>")
-    await ctx.send (embed = embed)
-    await ctx.send("https://imgur.com/mNt6BYw")
-    embed=discord.Embed(color=0xefdb77, title = "Overheat", description = "Description: Has +5 power while overheated. When played, select a tile to jump to. When landing, lose your overheat and regain your flip potential.\nRival with this ability: Elliana <:el_air:863078639575105626>\nNote: Missile Barrage becomes Overheat when the Elliana player has only 3 cards remaining on their hand.")
-    await ctx.send (embed = embed)
-    await ctx.send("https://imgur.com/YrUzyQD")
+    MB = "🚀"
+    OH = "🔥"
+    embed0=discord.Embed (color= 0xefdb77, title = "Elliana's abilities", description = "Elliana has two abilities\nMissile Barrage is the ability Elliana will use if played within the first 5 turns of the match, react with :rocket: to see info about Missile Barrage\nOverheat is the ability Elliana will use if played during the last 3 turns of the match, react with :fire: to see info about Overheat.")
+    embed1=discord.Embed(color=0xefdb77, title = "Missile Barrage", description = "Description: Creates a missile for every exposed side with power equal to that side. This missile fires and flips the furthest creature with any power lower than that missile.")
+    embed2=discord.Embed(color=0xefdb77, title = "Overheat", description = "Description: Has +5 power while overheated. When played, select a tile to jump to. When landing, lose your overheat and regain your flip potential.\nNote: Missile Barrage becomes Overheat when the Elliana player has only 3 cards remaining on their hand.")
+    message = await ctx.send (embed=embed0)
+    image = "https://media.discordapp.net/attachments/872236731397734431/872238425837826138/card-Elliana-level-1.png"
+    gif = await ctx.send(content = image)
+    gif1 = ("https://imgur.com/mNt6BYw")
+    gif2 = ("https://imgur.com/YrUzyQD")
+    number_of_responses = 2
+    emoji_numbers = [MB, OH]
+    for i in range(number_of_responses):
+        await message.add_reaction(emoji_numbers[i])
+    @client.event
+    async def on_reaction_add(reaction, user):
+        if user != client.user: #client.user being the bot
+          if reaction.emoji == MB:
+            await message.edit(embed=embed1)
+            await gif.edit (content = gif1)
+          if reaction.emoji == OH:
+            await message.edit(embed=embed2)
+            await gif.edit (content = gif2)
+    @client.event
+    async def on_raw_reaction_remove (reaction):
+      await message.edit(embed=embed0)
+      await gif.edit (content = image)
   elif ability == "BubbleFlip" or ability == "bubbleflip" or ability == "Bubbleflip" or ability == "bubbleFlip" or ability == "Bubble_Flip" or ability == "bubble_flip" or ability == "bubble_Flip" or ability == "Bubble_flip" or ability == "Ranno" or ability == "ranno" or ability == "bubble" or ability == "Bubble":
     embed=discord.Embed(color=0xefdb77, title = "Bubble Flip", description = "Description: Pulls all opponent creatures from a distance. If they are captured, places them into a bubble that prevents capture once. At the start of your turn, bubbles pop, creatures inside regain their flip potential.\nRival with this ability: Ranno <:el_water:863078639541420043>")
     await ctx.send (embed = embed)
@@ -1073,6 +1227,47 @@ async def a(ctx, ability=None):
     embed=discord.Embed(color=0xefdb77, title = "Bamboo Bayonet", description = "Description: When your other creatures are played, they'll sprout bamboos on diagonally adjacent tiles. For each bamboo this creature is played on, gain +2 and increase your flip range by 1.\nRival with this ability: Guadua <:el_earth:863078639779971102>")
     await ctx.send (embed = embed)
     await ctx.send("https://imgur.com/81d6sUg")
+  elif ability == "Mollo" or ability == "mollo" or ability == "Riot" or ability == "riot" or ability == "Riotgear" or ability == "riotgear" or ability == "RiotGear" or ability == "Riot_Gear" or ability == "Riot_gear" or ability == "riot_gear" or ability == "riot_Gear":
+    NG = "🖐"
+    EE = "💀"
+    SD = "➕"
+    DD = "⏬"
+    embed0 = discord.Embed(color=0xefdb77, title="Riot Gear", description="Description: Once per turn, you can play 1 of 4 special bombs on an empty tile. If this creature is played without its bombs, bombs left behind will be played on random tiles.\nRival with this ability: Mollo <:el_fire:863078639709323295>\nReact to the emojis below to see how each bomb works.")
+    embed1 = discord.Embed(color=0xefdb77, title="Nudging Grenade", description= "Pushes all adjacent creatures away from the tile this is played on.")
+    embed4 = discord.Embed(color=0xefdb77, title="Eradicating Explosive", description= "Destroy an even number of creatures in neighboring tiles, if 3 exist, this will prioritize the strongest 2 sides facing the tile this is played on; doesn't destroy legendaries.")
+    embed2 = discord.Embed(color=0xefdb77, title="Stain Device", description= "When played on an element tile, applies +1 of that element to all open neighboring tiles. If played on a tile with no element, will give all neighboring tiles -1.")
+    embed3 = discord.Embed(color=0xefdb77, title="Downgrade Detonator", description="Give all creatures next to and diagonal to the tile this is played on -1.")
+    message = await ctx.send(embed=embed0)
+    gif0 = "https://imgur.com/mcHkHhN"
+    gif1 = "https://imgur.com/zeGuqyj"
+    gif2 = "https://imgur.com/APt1h1t"
+    gif3 = "https://imgur.com/iN767QE"
+    gif4 = "https://imgur.com/FPN0afZ"
+    gif = await ctx.send (gif0)
+    number_of_responses = 4
+    emoji_numbers = [NG, SD, DD, EE]
+    for i in range(number_of_responses):
+      await message.add_reaction(emoji_numbers[i])
+
+    @client.event
+    async def on_reaction_add(reaction, user):
+      if user != client.user:
+        if reaction.emoji == NG:
+          await message.edit(embed=embed1)
+          await gif.edit(content=gif1)
+        if reaction.emoji == SD:
+          await message.edit(embed=embed2)
+          await gif.edit(content=gif2)
+        if reaction.emoji == DD:
+          await message.edit(embed=embed3)
+          await gif.edit(content=gif3)
+        if reaction.emoji == EE:
+          await message.edit(embed=embed4)
+          await gif.edit(content=gif4)
+    @client.event
+    async def on_raw_reaction_remove(reaction):
+      await message.edit(embed=embed0)
+      await gif.edit(content=gif0)
   else:
     await ctx.send(f"I'm sorry, I don't know this ability, make sure you spelled it correctly or check with @jpedromed.")
 my_secret = os.environ['TOKEN']
